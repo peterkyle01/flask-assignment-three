@@ -1,33 +1,28 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Flask Cloud App</title>
-    <style>
-        .container{
-            margin: 50px;
-            width: 100%;
-            height: 100px;
-            display: flex;
-            align-items: center;
-            gap: 20px;
-        }
-       .img_container{
-            border-radius: 50%;
-            width: 100px; 
-            height: 100px; 
-            background-position: center;
-            background-size: contain;
-            background-image: url("/static/peterkyle01.png");
-        }
-        h1{
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-    </style>
+    <title>Flask Cloud Storage</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <div class="container">    
-        <div class="img_container"></div>
-        <h1>Hello, This is Peter Mwangi!</h1>
-    </div>
+    <h1>Flask Cloud Storage</h1>
+    <form method="POST" enctype="multipart/form-data">
+        <input type="file" name="file">
+        <button type="submit">Upload</button>
+    </form>
+    <h2>Stored Files:</h2>
+    <ul>
+        {% for file in files %}
+        <li>
+            {% if file.lower().endswith(('.png', '.jpg', '.jpeg', '.gif', '.webp')) %}
+            <img src="{{ url_for('uploaded_file', filename=file) }}" alt="{{ file }}" style="max-width: 200px; max-height: 200px;">
+            {% else %}
+            <a href="{{ url_for('uploaded_file', filename=file) }}" target="_blank">{{ file }}</a>
+            {% endif %}
+            <a href="{{ url_for('update', filename=file) }}">Update</a>
+            <a href="{{ url_for('delete', filename=file) }}">Delete</a>
+        </li>
+        {% endfor %}
+    </ul>
 </body>
 </html>
