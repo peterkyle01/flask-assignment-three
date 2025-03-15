@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Update File | Flask Cloud Storage </title>
+    <title>Update File</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <h1>Update File: {{ filename }}</h1>
+    <h1>Update File: {{ file.filename }}</h1>
     <form method="POST" enctype="multipart/form-data">
         <input type="file" name="file">
         <button type="submit">Update</button>

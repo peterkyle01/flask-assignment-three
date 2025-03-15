@@ -14,13 +14,13 @@
     <ul>
         {% for file in files %}
         <li>
-            {% if file.lower().endswith(('.png', '.jpg', '.jpeg', '.gif', '.webp')) %}
-            <img src="{{ url_for('uploaded_file', filename=file) }}" alt="{{ file }}" style="max-width: 200px; max-height: 200px;">
+            {% if file.filename.lower().endswith(('.png', '.jpg', '.jpeg', '.gif', '.webp')) %}
+            <img src="data:image/{{ file.filename.split('.')[-1] }};base64,{{ file.base64 }}" alt="{{ file.filename }}" style="max-width: 200px; max-height: 200px;">
             {% else %}
-            <a href="{{ url_for('uploaded_file', filename=file) }}" target="_blank">{{ file }}</a>
+            <a href="data:application/octet-stream;base64,{{ file.base64 }}" download="{{ file.filename }}">{{ file.filename }}</a>
             {% endif %}
-            <a href="{{ url_for('update', filename=file) }}">Update</a>
-            <a href="{{ url_for('delete', filename=file) }}">Delete</a>
+            <a href="{{ url_for('update', index=loop.index0) }}">Update</a>
+            <a href="{{ url_for('delete', index=loop.index0) }}">Delete</a>
         </li>
         {% endfor %}
     </ul>
